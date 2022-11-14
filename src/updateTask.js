@@ -1,9 +1,12 @@
 const AWS = require("aws-sdk");
 
+const middy = require("@middy/core");
+const jsonBodyParser = require("@middy/http-json-body-parser");
+
 const updateTask = async event => {
 	const dynamodb = new AWS.DynamoDB.DocumentClient();
 	const id = event.pathParameters.id;
-	const { title, description, done } = JSON.parse(event.body);
+	const { title, description, done } = event.body;
 
 	try {
 		const result = await dynamodb
@@ -24,7 +27,7 @@ const updateTask = async event => {
 		const updatedTask = result.Attributes;
 
 		return {
-			statusCode: 200,
+			statusCode: 204,
 			body: JSON.stringify(updatedTask),
 		};
 	} catch (error) {
@@ -32,4 +35,4 @@ const updateTask = async event => {
 	}
 };
 
-module.exports = { updateTask };
+module.exports = { updateTask: middy(updateTask).use(jsonBodyParser()) };
