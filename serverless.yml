@@ -37,8 +37,8 @@ functions:
       - httpApi:
           path: /tasks/{id}
           method: get
-  updateTask:
-    handler: src/updateTask.updateTask
+  updateTaskStatus:
+    handler: src/updateTask.updateTaskStatus
     events:
       - httpApi:
           path: /tasks/{id}

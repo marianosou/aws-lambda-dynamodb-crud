@@ -13,7 +13,7 @@ const deleteTask = async event => {
 			.promise();
 
 		return {
-			statusCode: 201,
+			statusCode: 200,
 			body: JSON.stringify({
 				message: `${id} Task Deleted`,
 			}),
